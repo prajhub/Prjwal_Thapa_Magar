@@ -1,4 +1,4 @@
-//Prajwal_Thapa_Magar_L6CG5
+//Prajwal_Thapa_Magar_2059745
 
 //This code is a program that multiplies two matrices together using multiple threads. It includes the use of pthread library to create and manage threads.
 

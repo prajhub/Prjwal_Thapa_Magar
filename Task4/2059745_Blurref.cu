@@ -1,10 +1,25 @@
+//Prajwal_Thapa_Magar_2059745
+
+
+
+/*
+
+This code applies a box blur to an image using a CUDA kernel function on the GPU. I
+it takes in the memory locations of the input and output images, as well as their dimensions. 
+
+*/
+
+
+// Compile with:  nvcc 2059745_Blurref.cu lodepng.cpp -o cudablur
+// Execute with: ./cudablur
+
+
+
 #include <stdio.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "lodepng.h"
 
-// Compile with:  nvcc 2059745_Blurref.cu lodepng.cpp -o cudablur
-// Execute with: ./cudablur
 
 __global__ void box_blur(unsigned char * device_image_output, unsigned char * device_image_input, unsigned int width, unsigned int height)
 {
@@ -67,21 +82,21 @@ int main(int argc, char **argv)
 		host_image_input[i] = image[i];
 	}
 
-	// declaring device memory pointers
+	// Declaring the device's memory pointers.
 	unsigned char * d_in;
 	unsigned char * d_out;
 
-	// allocating device memory
+	// Allocating device's  memory.
 	cudaMalloc((void**) &d_in, array_bytes);
 	cudaMalloc((void**) &d_out, array_bytes);
 
-	// copying the host image input array to device memory
+	// Transferring the host image input data to device memory..
 	cudaMemcpy(d_in, host_image_input, array_bytes, cudaMemcpyHostToDevice);
 
-	// launching the kernel function
+	// Invoking the kernel function.
 	box_blur<<<height, width>>>(d_out, d_in, width, height);
 
-	// copying the processed result from device array to the host array
+	// Transferring the processed data from the device memory back to the host memory.
 	cudaMemcpy(host_image_output, d_out, array_bytes, cudaMemcpyDeviceToHost);
 	
 	error = lodepng_encode32_file(output_filename, host_image_output, width, height);
