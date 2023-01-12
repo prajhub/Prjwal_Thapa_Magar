@@ -71,7 +71,7 @@ void writeinFile(matrix write_Matrix){
      int rows = write_Matrix.rows;
     int cols = write_Matrix.cols;
      FILE *fptr;
-     fptr=fopen("Output.txt","w");
+     fptr=fopen("Matrix_multithrd_output.txt","w");
     int i, j;
      for (i = 0; i < rows; i++)
     {
@@ -312,7 +312,7 @@ void main(int argc, char *argv[])
                 pthread_join(thread_id[n], NULL);
             }
 
-            printf("\n\nOutput matrix C is printed on file output.txt \n");
+            printf("\n\nOutput matrix C is printed on file Matrix_multithrd_output.txt \n");
             writeinFile(C);
 
             // Deallocating the memory

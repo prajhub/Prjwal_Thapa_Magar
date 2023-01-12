@@ -29,7 +29,7 @@
     where number_of_threads should be > 0
 *******************************************************************************/
 
-int count = 0; // A counter used to track the number of combinations explored so far
+int count = 0; // Counter to keep a record of the amount of possibilities that have been examined up to this point.
 int Num_of_Threads;
 // int loopCount = 67600;
 int loopCount = 26;
@@ -47,6 +47,7 @@ char *salt_and_encrypted;
 
 sem_t sem;
 
+
 // Required by lack of standard function in C.
 void substr(char *dest, char *src, int start, int length)
 {
@@ -55,11 +56,10 @@ void substr(char *dest, char *src, int start, int length)
 }
 
 /**
- This function can crack the kind of password explained above. All combinations
- that are tried are displayed and when the password is found, #, is put at the 
- start of the line. Note that one of the most time consuming operations that 
- it performs is the output of intermediate results, so performance experiments 
- for this kind of program should not include this. i.e. comment out the printfs.
+  This function can break the previously described type of password. 
+  It shows all the combinations that are attempted and if the password is discovered, it puts "#" at the beginning of the line. 
+  However, it should be noted that displaying the intermediate results is one of the most time-consuming operations that it performs. 
+  Therefore, when measuring its performance, it is recommended to comment out the printfs (i.e. remove the output of intermediate results).
 */
 
 static void *crack(void *args)
@@ -114,7 +114,7 @@ static void *crack(void *args)
   }
   else
   {
-    // cancel all other threads when the required password has been found
+    // Terminate all other threads once the desired password is located.
     s = pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
     if (s != 0)
       handle_error_en(s, "pthread_setcancelstate");
@@ -127,7 +127,7 @@ static void *crack(void *args)
   sem_post(&sem);
 }
 
-// preparing the slicelist
+// Preparing slicelist
 void prepareSliceList()
 {
   int sliceList[Num_of_Threads];
@@ -136,14 +136,13 @@ void prepareSliceList()
   void *res;
   int s;
 
-  // to store the sliced/divided number of records to be processed by each thread
+  // For keeping the split/divided number of records that will be handled by every thread.
   for (int i = 0; i < Num_of_Threads; i++)
   {
     sliceList[i] = loopCount / Num_of_Threads;
   }
 
-  // to update the sliced/divided number of characters that each thread
-  // has to process without leaving any characters unprocessed/unchecked
+  // Keeping the split/divided number of records that will be handled by every thread.
   for (int j = 0; j < remainder; j++)
   {
     sliceList[j] = sliceList[j] + 1;
@@ -153,7 +152,7 @@ void prepareSliceList()
   int endList[Num_of_Threads];
 
   /*
-  * dividing the work load to the thread
+  * Dividing the work load to the thread
   *  */
   for (int k = 0; k < Num_of_Threads; k++)
   {
@@ -167,12 +166,14 @@ void prepareSliceList()
     }
 
     endList[k] = startList[k] + sliceList[k] - 1;
-    //checking the work load of each thread
+
+    //Checking the work load of each thread
     printf("\nstartList[%d] = %d `%c`\t\tendList[%d] = %d `%c`", k, startList[k], (char)startList[k], k, endList[k], (char)endList[k]);
   }
 
   struct threadInfo threadDetails[Num_of_Threads];
-//greating thread data
+
+
   for (int l = 0; l < Num_of_Threads; l++)
   {
     threadDetails[l].limit = startList[l];
