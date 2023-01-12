@@ -1,3 +1,18 @@
+/******************************************************************************
+  
+This code displays the working procedure of breaking a secure password by using a "brute force" technique. This solution is for passwords made up of two capital letters and two numbers.
+
+  Compile the code with:
+    gcc CrackAZ99.c -lpthread -lcrypt -o CrackAZ99 
+
+  Execute the code with:
+    ./CrackAZ99 <numberofthreads>
+    where number_of_threads should be > 0
+*******************************************************************************/
+
+
+
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -16,18 +31,7 @@
     exit(EXIT_FAILURE);          \
   } while (0)
 
-/******************************************************************************
-  Demonstrates how to crack an encrypted password using a simple
-  "brute force" algorithm. Works on passwords that consist only of 2 uppercase
-  letters and a 2 digit integer.
 
-  Compile with:
-    gcc CrackAZ99.c -lpthread -lcrypt -o CrackAZ99 
-
-  Execute with:
-    ./CrackAZ99 <numberofthreads>
-    where number_of_threads should be > 0
-*******************************************************************************/
 
 int count = 0; // Counter to keep a record of the amount of possibilities that have been examined up to this point.
 int Num_of_Threads;
