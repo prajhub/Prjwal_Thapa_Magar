@@ -38,6 +38,12 @@ pthread_mutex_t mutex;
 
 int thread_counter = 0;
 
+
+
+/* 
+This function creates matrix of given rows and columns with all elements initialized to 0.0.
+It takes in integer inputs for rows and columns, allocates memory for the matrix and returns the initialized matrix.
+*/
 matrix create_matrix(int rows, int cols)
 {
     // matrix target;
@@ -55,6 +61,12 @@ matrix create_matrix(int rows, int cols)
         }
     return target;
 }
+
+
+/*
+   the function writeinFile  writes the elements of the given matrix to a file named "Output.txt" in a formatted way. 
+    It opens the file in write mode, writes the matrix elements to the file and closes the file at the end.
+*/
 void writeinFile(matrix write_Matrix){
      int rows = write_Matrix.rows;
     int cols = write_Matrix.cols;
@@ -75,6 +87,11 @@ void writeinFile(matrix write_Matrix){
     }
     fprintf(fptr,"\n\n");
 }
+
+
+/*
+    the function display_matrix takes a matrix as input and prints its elements in a organized format to the console.
+*/
 void display_matrix(matrix displayable_matrix)
 {
     int rows = displayable_matrix.rows;
@@ -94,6 +111,8 @@ void display_matrix(matrix displayable_matrix)
     }
     printf("\n\n");
 }
+
+
 
 double calculate_one_matrix_unit(int first, int second)
 {
