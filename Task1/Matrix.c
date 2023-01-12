@@ -113,6 +113,10 @@ void display_matrix(matrix displayable_matrix)
 }
 
 
+/*
+    This function calculates the product of two elements from matrices A and B and 
+    it takes two integers as input and returns a double value.
+*/
 
 double calculate_one_matrix_unit(int first, int second)
 {
@@ -126,7 +130,9 @@ double calculate_one_matrix_unit(int first, int second)
     return res;
 }
 
-// thread function to process the number of rows assigned to each thread
+/*
+This function is used to handle the number of rows assigned to each thread.
+*/
 void *multiply_matrices(void *param)
 {
     while (1)
@@ -165,7 +171,7 @@ void *multiply_matrices(void *param)
     pthread_exit(NULL);
 }
 
-// the main function that invokes itself at runtime, obviously!
+// this is the main function which gets invoked at runtime.
 void main(int argc, char *argv[])
 {
      threadCount = strtol(argv[3], NULL, 10);
@@ -206,7 +212,7 @@ void main(int argc, char *argv[])
         MatrixB_Row = *(q + 0);
         MatrixB_Col = *(q + 1);
 
-        // output matrix C is the combination of rows from matrix A and columns from matrix B
+        // Matrix C is the result of combining rows from matrix A and columns from matrix B.
         MatrixC_Row = MatrixA_Row;
         MatrixC_Col = MatrixB_Col;
 
@@ -215,15 +221,17 @@ void main(int argc, char *argv[])
         printf("\nMatrix A \tRows: %d, Columns: %d\n", MatrixA_Row, MatrixA_Col);
         printf("Matrix B \t Rows: %d, Columns: %d\n", MatrixB_Row, MatrixB_Col);
         printf("Output Matrix\t Rows: %d, Columns: %d\n\n", MatrixA_Row, MatrixB_Col);
-// checking matrix for multiplying
+
+// Checking the matrix for performing multiplication.
+
         if (MatrixA_Col == MatrixB_Row)
         {
-            // elements/values present in each matrix
+            // Elements / values present in each matrix
             int matA_elements = MatrixA_Row * MatrixA_Col;
             int matB_elements = MatrixB_Row * MatrixB_Col;
             int matC_elements = MatrixC_Row * MatrixC_Col;
 
-            // dynamic memory allocation
+            // Dynamic Memory Allocation
             double *Matrix_A = (double *)malloc(matA_elements * sizeof(double));
             double *Matrix_B = (double *)malloc(matB_elements * sizeof(double));
 
@@ -238,7 +246,7 @@ void main(int argc, char *argv[])
                 exit(0);
             }
 
-            // Scanning the file and storing the matrix A data in allocated memory
+            // Reading the file and saving the data of matrix A in allocated memory.
             int counter = 0;
             for (row = 0; row < MatrixA_Row; row++)
             {
@@ -259,7 +267,7 @@ void main(int argc, char *argv[])
             target_matB.cols = MatrixB_Col;
             target_matB.x = (unit *)malloc(MatrixB_Row * MatrixB_Col * sizeof(unit));
 
-            // Scanning the file and storing the matrix B data in allocated memory
+            // Reading the file and saving the data of matrix B in allocated memory.
              counter = 0;
             for (row = 0; row < MatrixB_Row; row++)
             {
@@ -307,7 +315,7 @@ void main(int argc, char *argv[])
             printf("\n\nOutput matrix C is printed on file output.txt \n");
             writeinFile(C);
 
-            // deallocating the memory
+            // Deallocating the memory
             free(Matrix_A);
             free(Matrix_B);
             free(target_matA.x);
@@ -329,7 +337,9 @@ void main(int argc, char *argv[])
 }
 
 
-// function to find the number of rows and columns of each matrix from the files
+/*
+This function is used to find out the dimensions or rows & columns of each matrix from the files.
+*/
 int *find_number_of_rows_and_columns(const char *file_name)
 {
     FILE *fp = fopen(file_name, "r");
